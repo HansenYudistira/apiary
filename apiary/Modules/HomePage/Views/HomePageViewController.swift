@@ -56,7 +56,6 @@ internal class HomePageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
         setupView()
         bindViewModel()
         viewModel.fetchData()
@@ -138,7 +137,11 @@ extension HomePageViewController {
 }
 
 extension HomePageViewController: UITableViewDelegate {
-    /// TODO: handle cell tapped navigate to item list
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let viewModel = viewModel as? HomePageViewModel else { return }
+        viewModel.navigateToItemList(for: categoryListModel[indexPath.row])
+    }
 }
 
 extension HomePageViewController: UISearchBarDelegate {

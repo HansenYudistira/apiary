@@ -3,30 +3,50 @@ import UIKit
 protocol Module {
     associatedtype ViewController: UIViewController
     associatedtype Parameters
-    func assemble(parameters: Parameters) -> ViewController
+    func assemble(coordinator: Coordinator, parameters: Parameters) -> ViewController
 }
 
 internal class ModuleAssembler {
     internal func assemble<T: Module>(
         module: T,
+        coordinator: Coordinator,
         parameters: T.Parameters
     ) -> T.ViewController {
-        return module.assemble(parameters: parameters)
+        return module.assemble(coordinator: coordinator, parameters: parameters)
     }
 }
 
 internal struct HomePageModule: Module {
-    internal func assemble(parameters: String = "") -> HomePageViewController {
+    internal func assemble(
+        coordinator: Coordinator,
+        parameters: String = ""
+    ) -> HomePageViewController {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 5.0
         let session = URLSession(configuration: configuration)
         let contract = HomePageViewModelContract(
             networkManager: NetworkManager(urlSession: session),
             dataDecoder: DataDecoder(),
-            urlConstructor: URLConstructor()
+            urlConstructor: URLConstructor(),
+            coordinator: coordinator
         )
         let vm = HomePageViewModel(contract: contract)
         let viewController = HomePageViewController(viewModel: vm)
+        return viewController
+    }
+}
+
+internal struct ItemListPageModule: Module {
+    internal func assemble(
+        coordinator: Coordinator,
+        parameters: ItemCategoryModel
+    ) -> ItemListPageViewController {
+        let contract = ItemListPageViewModelContract(
+            parameters: parameters,
+            coordinator: coordinator
+        )
+        let vm = ItemListPageViewModel(contract: contract)
+        let viewController = ItemListPageViewController(viewModel: vm)
         return viewController
     }
 }

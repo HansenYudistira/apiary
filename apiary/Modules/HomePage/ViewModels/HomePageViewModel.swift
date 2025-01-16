@@ -4,6 +4,7 @@ internal class HomePageViewModel {
     private let networkManager: APIClient
     private let decoder: DataDecoderProtocol
     private let urlConstructor: URLConstructorProtocol
+    private let coordinator: Coordinator
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
     @Published var cachedItem: [ItemCategoryModel]?
@@ -14,6 +15,7 @@ internal class HomePageViewModel {
         self.networkManager = contract.networkManager
         self.decoder = contract.dataDecoder
         self.urlConstructor = contract.urlConstructor
+        self.coordinator = contract.coordinator
     }
 }
 
@@ -21,7 +23,7 @@ extension HomePageViewModel: HomePageViewModelFetchProtocol {
     func fetchData() {
         /// show loading to view
         isLoading = true
-        let url: String = urlConstructor.constructURL()
+//        let url: String = urlConstructor.constructURL()
         let mockData: String = """
             {
                 "status": "success",
@@ -136,5 +138,18 @@ extension HomePageViewModel: HomePageViewModelFetchProtocol {
 //            /// hide loading from view
 //            isLoading = false
 //        }
+    }
+}
+
+extension HomePageViewModel: HomePageViewModelNavigateProtocol {
+    internal func navigateToItemList(for category: ViewCategoryListModel) {
+        let parameters = cachedItem?.first(where: { $0.id == category.id })
+        guard
+            let parameters
+        else {
+            self.errorMessage = "No item found for \(category.name)"
+            return
+        }
+        self.coordinator.navigate(to: .itemListPage(parameters))
     }
 }

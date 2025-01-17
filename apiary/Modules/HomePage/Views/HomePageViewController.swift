@@ -10,13 +10,6 @@ internal class HomePageViewController: UIViewController {
     private var dataSource: UITableViewDiffableDataSource<Section, ViewCategoryListModel>?
     private var cancellables: Set<AnyCancellable> = []
 
-    lazy var searchBarController: UISearchController = {
-        let searchController = UISearchController()
-        searchController.searchBar.delegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = LocalizedKey.search.localized
-        return searchController
-    }()
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -71,7 +64,6 @@ internal class HomePageViewController: UIViewController {
 
     private func setupView() {
         navigationItem.title = LocalizedKey.title.localized
-        navigationItem.searchController = searchBarController
         view.addSubview(gradientBackground)
         view.addSubview(tableView)
         view.addSubview(loadingView)
@@ -160,14 +152,5 @@ extension HomePageViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let viewModel = viewModel as? HomePageViewModel else { return }
         viewModel.navigateToItemList(for: categoryListModel[indexPath.row])
-    }
-}
-
-extension HomePageViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)  {
-        guard let query = searchBar.text, !query.isEmpty else {
-            return
-        }
-        /// TODO: filter to searched query
     }
 }

@@ -51,7 +51,7 @@ extension HomePageViewModel: HomePageViewModelFetchProtocol {
                                 "details": {
                                     "author": "Author 2",
                                     "published_date": "2024-01-12",
-                                    "tags": ["tag4", "tag5"]
+                                    "tags": ["tag3", "tag4", "tag5"]
                                 }
                             }
                         ]

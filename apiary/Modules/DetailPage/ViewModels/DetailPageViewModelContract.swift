@@ -3,8 +3,8 @@ internal struct DetailPageViewModelContract {
     let coordinator: Coordinator
 }
 
-typealias DetailPageViewModelProtocol = DetailPageViewModelFetchProtocol
+typealias DetailPageViewModelProtocol = DetailPageViewModelDataProtocol
 
-protocol DetailPageViewModelFetchProtocol {
-    
+protocol DetailPageViewModelDataProtocol {
+    func fetchUniqueTag() -> [String]
 }

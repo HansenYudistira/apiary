@@ -4,12 +4,16 @@ internal struct ItemListPageViewModelContract {
 }
 
 typealias ItemListPageViewModelProtocol =
-ItemListPageViewModelFetchProtocol &
+ItemListPageViewModelDataProtocol &
 ItemListPageViewModelNavigateProtocol
 
-protocol ItemListPageViewModelFetchProtocol {
+protocol ItemListPageViewModelDataProtocol {
     func fetchData() -> [ViewItemListModel]
     func fetchTitle() -> String
+    func fetchTags() -> [String]
+    func fetchFilteredData(with tag: String, status: Bool) -> [ViewItemListModel]
+    func searchItems(with query: String) -> [ViewItemListModel]
+    func clearTagsFilter()
 }
 
 protocol ItemListPageViewModelNavigateProtocol {

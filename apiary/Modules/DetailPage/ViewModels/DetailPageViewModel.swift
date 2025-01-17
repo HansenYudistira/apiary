@@ -6,4 +6,8 @@ internal class DetailPageViewModel: DetailPageViewModelProtocol {
         self.itemListModel = contract.parameters
         self.coordinator = contract.coordinator
     }
+    
+    internal func fetchUniqueTag() -> [String] {
+        return Array(Set(itemListModel.details.tags)).sorted()
+    }
 }

@@ -16,16 +16,16 @@ internal class CategoryCellView: UITableViewCell {
         label.textAlignment = .center
         return label
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView() {
         let mainStackView = UIStackView(arrangedSubviews: [categoryLabel, itemCountLabel])
         mainStackView.axis = .vertical
@@ -40,7 +40,7 @@ internal class CategoryCellView: UITableViewCell {
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
-    
+
     func configure(with model: ViewCategoryListModel) {
         categoryLabel.text = model.name
         itemCountLabel.text = "Item count = \(model.item_count)"

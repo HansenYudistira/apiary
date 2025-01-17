@@ -6,12 +6,12 @@ enum LocalizedKey: String {
     case cancel
     case error
     case loading
-    
+
     var localized: String {
         let key: String = String(describing: self)
         return NSLocalizedString(key, comment: self.comment)
     }
-    
+
     private var comment: String {
         switch self {
         case .search:

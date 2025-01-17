@@ -44,23 +44,23 @@ internal class HomePageViewController: UIViewController {
         return alert
     }()
     lazy var loadingView: LoadingView = LoadingView()
-    
+
     init(viewModel: HomePageViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         bindViewModel()
         viewModel.fetchData()
     }
-    
+
     private func setupView() {
         navigationItem.searchController = searchBarController
         view.backgroundColor = .systemCyan
@@ -77,7 +77,6 @@ internal class HomePageViewController: UIViewController {
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-    
 }
 
 extension HomePageViewController {
@@ -113,7 +112,7 @@ extension HomePageViewController {
             }
             .store(in: &cancellables)
     }
-    
+
     private func updateDataSource() {
         guard let dataSource else { return }
         var snapshot = NSDiffableDataSourceSnapshot<Section, ViewCategoryListModel>()
@@ -121,7 +120,7 @@ extension HomePageViewController {
         snapshot.appendItems(categoryListModel)
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
     }
-    
+
     private func showErrorAlert(message: String) {
         errorAlert.message = message
         present(errorAlert, animated: true, completion: nil)

@@ -1,5 +1,7 @@
 import UIKit
 
+// Collection View that are used in DetailPageViewController and ItemListPageViewController
+// for TagCellView
 internal class CustomCollectionView: UICollectionView {
     internal let identifier: String
 

@@ -1,5 +1,6 @@
 import Foundation
 
+// Used to Validate response received by URLSession (DataTask Function)
 protocol ResponseValidatorProtocol {
     func validate(_ response: URLResponse) throws
 }

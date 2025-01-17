@@ -16,6 +16,7 @@ internal class DetailPageViewController: UIViewController {
         let collectionView = CustomCollectionView(axis: .horizontal, cellIdentifier: tagIdentifier)
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
+        /// setup Data Source for Tag Collection View
         dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView) {
             collectionView, indexPath, tag in
                 guard let cell = collectionView.dequeueReusableCell(
@@ -134,6 +135,7 @@ internal class DetailPageViewController: UIViewController {
     }
 }
 
+// MARK: Collection View Delegate Flow Layout
 extension DetailPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

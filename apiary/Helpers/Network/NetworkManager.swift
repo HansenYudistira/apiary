@@ -1,5 +1,6 @@
 import Foundation
 
+// MARK: Protocol to make Mock URLSession in Unit Test
 protocol URLSessionProtocol {
     func dataTask(
         with url: URL,
@@ -9,6 +10,7 @@ protocol URLSessionProtocol {
 
 extension URLSession: URLSessionProtocol {}
 
+// MARK: Network Manager used for handling API (Currently only fetching data)
 protocol APIClient {
     func get(url: String, completion: @escaping (Result<Data, Error>) -> Void)
 }

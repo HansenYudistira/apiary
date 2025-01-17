@@ -4,6 +4,7 @@ internal struct ItemCategoryModel: Decodable {
     let items: [ItemListModel]
 }
 
+// function to convert into Model for HomePageViewController
 extension ItemCategoryModel {
     func toViewCategoryListModel() -> ViewCategoryListModel {
         return ViewCategoryListModel(

@@ -1,3 +1,4 @@
+// MARK: HomePageViewModel Contract and Protocols
 internal struct HomePageViewModelContract {
     internal let networkManager: APIClient
     internal let dataDecoder: DataDecoderProtocol

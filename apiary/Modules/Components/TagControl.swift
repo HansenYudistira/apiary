@@ -1,5 +1,6 @@
 import UIKit
 
+// Control that are used in TagCellView
 internal class TagControl: UIControl {
     lazy var label: UILabel = {
         let label = UILabel()

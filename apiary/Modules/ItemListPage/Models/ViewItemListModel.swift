@@ -1,3 +1,4 @@
+// Model used for ItemListPageViewController
 internal struct ViewItemListModel: Hashable {
     let id: Int
     let title: String

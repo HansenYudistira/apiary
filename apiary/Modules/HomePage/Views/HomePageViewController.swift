@@ -22,6 +22,7 @@ internal class HomePageViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(CategoryCellView.self, forCellReuseIdentifier: CategoryCellView.identifier)
         tableView.delegate = self
+        // Setup Diffable Data Source for Table View
         dataSource = UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
             guard
                 let cell = tableView.dequeueReusableCell(
@@ -84,6 +85,7 @@ internal class HomePageViewController: UIViewController {
         ])
     }
 
+    /// Swipe Down to Refresh function
     @objc func refreshData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.viewModel.fetchData()
@@ -92,6 +94,7 @@ internal class HomePageViewController: UIViewController {
     }
 }
 
+// MARK: Binding ViewModel State
 extension HomePageViewController {
     private func bindViewModel() {
         guard
@@ -148,6 +151,7 @@ extension HomePageViewController {
     }
 }
 
+// MARK: Table View Delegate
 extension HomePageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

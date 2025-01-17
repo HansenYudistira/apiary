@@ -1,5 +1,6 @@
 import UIKit
 
+// used for Coordinate between Views
 enum Destination {
     case homePage
     case itemListPage(ItemCategoryModel)

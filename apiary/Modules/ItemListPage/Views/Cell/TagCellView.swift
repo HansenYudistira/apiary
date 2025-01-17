@@ -1,5 +1,6 @@
 import UIKit
 
+// Cell View used in ItemListPageViewController and DetailPageViewController
 internal class TagCellView: UICollectionViewCell {
     lazy var tagControl: TagControl = TagControl()
     static let identifier: String = "TagCellView"

@@ -1,5 +1,6 @@
 import UIKit
 
+// UIView for background with gradient color of light purple
 internal class GradientBackgroundView: UIView {
     lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()

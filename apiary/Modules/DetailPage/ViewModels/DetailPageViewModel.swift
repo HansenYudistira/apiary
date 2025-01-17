@@ -7,10 +7,12 @@ internal class DetailPageViewModel: DetailPageViewModelProtocol {
         self.coordinator = contract.coordinator
     }
     
+    // fetch data of unique tag for filter purpose
     internal func fetchUniqueTag() -> [String] {
         return Array(Set(itemListModel.details.tags)).sorted()
     }
     
+    // fetch all data contained in itemListModel
     internal func fetchData() -> ItemListModel {
         return itemListModel
     }

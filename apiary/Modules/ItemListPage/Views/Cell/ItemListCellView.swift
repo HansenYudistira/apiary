@@ -106,6 +106,7 @@ internal class ItemListCellView: UITableViewCell {
         titleLabel.text = item.title
         descriptionLabel.text = item.description
         if let url = URL(string: item.image_url) {
+            // caching image and set image using KingFisher
             self.itemImageView.kf.setImage(
                 with: url,
                 placeholder: UIImage(named: "placeholder"),

@@ -11,7 +11,9 @@ internal class ItemListPageViewController: UIViewController {
         case main
         case tags
     }
+    /// data source for item table view
     private var dataSource: UITableViewDiffableDataSource<Section, ViewItemListModel>?
+    /// data source for tag collection view
     private var tagsDataSource: UICollectionViewDiffableDataSource<Section, String>?
     lazy var searchBarController: UISearchController = {
         let searchController = UISearchController()

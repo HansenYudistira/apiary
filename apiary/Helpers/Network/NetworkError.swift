@@ -1,5 +1,6 @@
 import Foundation
 
+// Used for Network Error Message
 enum NetworkError: Error, Equatable {
     case noData
     case noResponse

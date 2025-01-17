@@ -1,5 +1,6 @@
 import UIKit
 
+// Loading View to show indicator when loading
 internal class LoadingView: UIView {
     lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)

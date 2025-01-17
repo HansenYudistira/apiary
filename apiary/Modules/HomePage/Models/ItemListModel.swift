@@ -6,6 +6,7 @@ internal struct ItemListModel: Decodable {
     let details: ItemDetailModel
 }
 
+// function to convert into Model for ItemListPageViewController
 extension ItemListModel {
     func toViewItemListModel() -> ViewItemListModel {
         return ViewItemListModel(

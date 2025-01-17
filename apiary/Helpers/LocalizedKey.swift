@@ -1,5 +1,6 @@
 import UIKit
 
+// Return NSLocalizedString to prevent hard code string in ViewControllers
 enum LocalizedKey: String {
     case search
     case ok

@@ -1,3 +1,4 @@
+// Model used for HomePageViewController
 internal struct ViewCategoryListModel: Hashable {
     let id: Int
     let name: String

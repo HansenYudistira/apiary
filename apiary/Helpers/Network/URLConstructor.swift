@@ -1,5 +1,6 @@
 import Foundation
 
+// Used to Construct URL
 protocol URLConstructorProtocol {
     func constructURL() -> String
 }

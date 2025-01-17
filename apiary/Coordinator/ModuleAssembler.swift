@@ -1,5 +1,6 @@
 import UIKit
 
+// Used for Assembling Module to be navigated to
 protocol Module {
     associatedtype ViewController: UIViewController
     associatedtype Parameters

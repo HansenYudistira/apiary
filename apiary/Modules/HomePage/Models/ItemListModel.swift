@@ -5,3 +5,14 @@ internal struct ItemListModel: Decodable {
     let image_url: String
     let details: ItemDetailModel
 }
+
+extension ItemListModel {
+    func toViewItemListModel() -> ViewItemListModel {
+        return ViewItemListModel(
+            id: id,
+            title: title,
+            description: description,
+            image_url: image_url
+        )
+    }
+}

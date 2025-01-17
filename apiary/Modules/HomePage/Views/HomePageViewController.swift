@@ -7,7 +7,7 @@ internal class HomePageViewController: UIViewController {
     enum Section {
         case main
     }
-    var dataSource: UITableViewDiffableDataSource<Section, ViewCategoryListModel>?
+    private var dataSource: UITableViewDiffableDataSource<Section, ViewCategoryListModel>?
     private var cancellables: Set<AnyCancellable> = []
 
     lazy var searchBarController: UISearchController = {

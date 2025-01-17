@@ -9,7 +9,7 @@ internal class ItemListPageViewController: UIViewController {
     enum Section {
         case main
     }
-    var dataSource: UITableViewDiffableDataSource<Section, ViewItemListModel>?
+    private var dataSource: UITableViewDiffableDataSource<Section, ViewItemListModel>?
     lazy var searchBarController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.delegate = self

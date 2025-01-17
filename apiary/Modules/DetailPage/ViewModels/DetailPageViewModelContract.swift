@@ -7,4 +7,5 @@ typealias DetailPageViewModelProtocol = DetailPageViewModelDataProtocol
 
 protocol DetailPageViewModelDataProtocol {
     func fetchUniqueTag() -> [String]
+    func fetchData() -> ItemListModel
 }

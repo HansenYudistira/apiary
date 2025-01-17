@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 internal class DetailPageViewController: UIViewController {
     private let viewModel: DetailPageViewModelProtocol
@@ -30,8 +31,37 @@ internal class DetailPageViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
+    lazy var fullImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    lazy var authorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .light)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    lazy var publishedDateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .light)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [tagCollectionView])
+        let stackView = UIStackView(arrangedSubviews: [fullImageView, tagCollectionView, authorLabel, publishedDateLabel, descriptionLabel])
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +93,18 @@ internal class DetailPageViewController: UIViewController {
     
     private func fetchData() {
         uniqueTag = viewModel.fetchUniqueTag()
+        viewItemListModel = viewModel.fetchData()
+        guard let viewItemListModel else { return }
+        descriptionLabel.text = viewItemListModel.description
+        authorLabel.text = viewItemListModel.details.author
+        publishedDateLabel.text = viewItemListModel.details.published_date
+        if let url = URL(string: viewItemListModel.image_url) {
+            self.fullImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "placeholder"),
+                options: [.cacheOriginalImage]
+            )
+        }
     }
 
     private func setupView() {
@@ -73,6 +115,8 @@ internal class DetailPageViewController: UIViewController {
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            fullImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            fullImageView.widthAnchor.constraint(equalTo: fullImageView.heightAnchor),
             tagCollectionView.heightAnchor.constraint(equalToConstant: 50.0),
             gradientBackground.topAnchor.constraint(equalTo: view.topAnchor),
             gradientBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),

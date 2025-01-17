@@ -10,4 +10,8 @@ internal class DetailPageViewModel: DetailPageViewModelProtocol {
     internal func fetchUniqueTag() -> [String] {
         return Array(Set(itemListModel.details.tags)).sorted()
     }
+    
+    internal func fetchData() -> ItemListModel {
+        return itemListModel
+    }
 }

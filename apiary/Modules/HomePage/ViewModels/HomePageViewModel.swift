@@ -21,7 +21,6 @@ internal class HomePageViewModel {
 
 extension HomePageViewModel: HomePageViewModelFetchProtocol {
     func fetchData() {
-        /// show loading to view
         isLoading = true
 //        let url: String = urlConstructor.constructURL()
         let mockData: String = """

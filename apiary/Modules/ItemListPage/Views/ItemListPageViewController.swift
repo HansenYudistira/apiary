@@ -17,6 +17,11 @@ internal class ItemListPageViewController: UIViewController {
         searchController.searchBar.placeholder = LocalizedKey.search.localized
         return searchController
     }()
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refreshControl
+    }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .secondarySystemBackground
@@ -36,6 +41,7 @@ internal class ItemListPageViewController: UIViewController {
             cell.configure(with: model)
             return cell
         })
+        tableView.refreshControl = self.refreshControl
         return tableView
     }()
     lazy var errorAlert: UIAlertController = {
@@ -83,6 +89,14 @@ internal class ItemListPageViewController: UIViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(viewItemListModel)
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+    }
+    
+    @objc func refreshData() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.viewItemListModel = self.viewModel.fetchData()
+            self.updateDataSource()
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 

@@ -17,6 +17,11 @@ internal class HomePageViewController: UIViewController {
         searchController.searchBar.placeholder = LocalizedKey.search.localized
         return searchController
     }()
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refreshControl
+    }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .secondarySystemBackground
@@ -36,6 +41,7 @@ internal class HomePageViewController: UIViewController {
             cell.configure(with: model)
             return cell
         })
+        tableView.refreshControl = self.refreshControl
         return tableView
     }()
     lazy var errorAlert: UIAlertController = {
@@ -76,6 +82,13 @@ internal class HomePageViewController: UIViewController {
             loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    @objc func refreshData() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.viewModel.fetchData()
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 

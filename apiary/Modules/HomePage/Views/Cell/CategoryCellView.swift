@@ -4,14 +4,14 @@ internal class CategoryCellView: UITableViewCell {
     static let identifier: String = "CategoryCellView"
     lazy var categoryLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 24, weight: .heavy)
         label.textColor = .black
         label.textAlignment = .center
         return label
     }()
     lazy var itemCountLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -90,6 +90,6 @@ internal class CategoryCellView: UITableViewCell {
 
     func configure(with model: ViewCategoryListModel) {
         categoryLabel.text = model.name
-        itemCountLabel.text = "Item count = \(model.item_count)"
+        itemCountLabel.text = "\(LocalizedKey.itemCount.localized): \(model.item_count)"
     }
 }

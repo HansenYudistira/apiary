@@ -12,14 +12,14 @@ internal class ItemListCellView: UITableViewCell {
     }()
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 24, weight: .medium)
         label.textColor = .black
         label.textAlignment = .left
         return label
     }()
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 2

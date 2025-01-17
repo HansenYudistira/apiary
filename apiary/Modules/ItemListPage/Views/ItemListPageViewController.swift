@@ -94,6 +94,7 @@ internal class ItemListPageViewController: UIViewController {
     }
 
     private func setupView() {
+        navigationItem.backButtonDisplayMode = .minimal
         navigationItem.title = viewModel.fetchTitle()
         navigationItem.searchController = searchBarController
         view.addSubview(gradientBackground)

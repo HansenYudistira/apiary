@@ -63,6 +63,7 @@ internal class HomePageViewController: UIViewController {
     }
 
     private func setupView() {
+        navigationItem.backButtonDisplayMode = .minimal
         navigationItem.title = LocalizedKey.title.localized
         view.addSubview(gradientBackground)
         view.addSubview(tableView)

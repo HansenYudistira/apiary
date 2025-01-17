@@ -37,6 +37,24 @@
         }
       }
     },
+    "itemCount" : {
+      "comment" : "Items Count",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Items count"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah Barang"
+          }
+        }
+      }
+    },
     "loading" : {
       "comment" : "Loading, please waiting",
       "extractionState" : "manual",

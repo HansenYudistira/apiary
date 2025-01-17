@@ -98,6 +98,7 @@ internal class DetailPageViewController: UIViewController {
         descriptionLabel.text = viewItemListModel.description
         authorLabel.text = viewItemListModel.details.author
         publishedDateLabel.text = viewItemListModel.details.published_date
+        navigationItem.title = viewItemListModel.title
         if let url = URL(string: viewItemListModel.image_url) {
             self.fullImageView.kf.setImage(
                 with: url,

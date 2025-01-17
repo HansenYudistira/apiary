@@ -73,11 +73,11 @@ final class MockNetworkManager: APIClient {
             }
         }
     """
-    
+
     enum MockDataError: Error {
         case failedToConvertData
     }
-    
+
     func get(url: String, completion: @escaping (Result<Data, any Error>) -> Void) {
         if let data = mockData.data(using: .utf8) {
             completion(.success(data))
@@ -93,26 +93,41 @@ struct MockURLConstructor: URLConstructorProtocol {
     }
 }
 
+class MockCoordinator: Coordinator {
+    var startState: Bool = false
+    var navigateState: Bool = false
+    func start() {
+        startState = true
+    }
+    
+    func navigate(to destination: apiary.Destination) {
+        navigateState = true
+    }
+}
+
 final class HomePageViewModelTests: XCTestCase {
     var cancellables: Set<AnyCancellable>!
     var viewModel: HomePageViewModel!
-    
+    var coordinator: MockCoordinator!
+
     override func setUp() {
         super.setUp()
         cancellables = []
+        coordinator = MockCoordinator()
         let contract = HomePageViewModelContract(
             networkManager: MockNetworkManager(),
             dataDecoder: DataDecoder(),
-            urlConstructor: MockURLConstructor()
+            urlConstructor: MockURLConstructor(),
+            coordinator: coordinator
         )
         viewModel = HomePageViewModel(contract: contract)
     }
-    
+
     override func tearDown() {
         cancellables = []
         super.tearDown()
     }
-    
+
     func testSuccessConvertDataToModel() {
         let expectation = self.expectation(description: "Should success convert the data into model")
         viewModel.$cachedItem
@@ -127,5 +142,19 @@ final class HomePageViewModelTests: XCTestCase {
         viewModel.fetchData()
         waitForExpectations(timeout: 2.0, handler: nil)
         cancellables = []
+    }
+    
+    func testNavigateToItemListSuccess() {
+        viewModel.fetchData()
+        let category = ViewCategoryListModel(id: 101, name: "Category 1", item_count: 1)
+        viewModel.navigateToItemList(for: category)
+        XCTAssertTrue(coordinator.navigateState)
+    }
+
+    func testNavigateToItemListFailed() {
+        viewModel.fetchData()
+        let category = ViewCategoryListModel(id: -1, name: "Category 1", item_count: 1)
+        viewModel.navigateToItemList(for: category)
+        XCTAssertFalse(coordinator.navigateState)
     }
 }

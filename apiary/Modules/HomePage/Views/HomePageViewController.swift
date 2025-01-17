@@ -24,7 +24,8 @@ internal class HomePageViewController: UIViewController {
     }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .secondarySystemBackground
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(CategoryCellView.self, forCellReuseIdentifier: CategoryCellView.identifier)
         tableView.delegate = self
@@ -50,6 +51,7 @@ internal class HomePageViewController: UIViewController {
         return alert
     }()
     lazy var loadingView: LoadingView = LoadingView()
+    lazy var gradientBackground: GradientBackgroundView = GradientBackgroundView()
 
     init(viewModel: HomePageViewModelProtocol) {
         self.viewModel = viewModel
@@ -68,11 +70,16 @@ internal class HomePageViewController: UIViewController {
     }
 
     private func setupView() {
+        navigationItem.title = LocalizedKey.title.localized
         navigationItem.searchController = searchBarController
-        view.backgroundColor = .systemCyan
+        view.addSubview(gradientBackground)
         view.addSubview(tableView)
         view.addSubview(loadingView)
         NSLayoutConstraint.activate([
+            gradientBackground.topAnchor.constraint(equalTo: view.topAnchor),
+            gradientBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            gradientBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            gradientBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -83,7 +90,7 @@ internal class HomePageViewController: UIViewController {
             loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-    
+
     @objc func refreshData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.viewModel.fetchData()
@@ -140,11 +147,11 @@ extension HomePageViewController {
     }
 
     private func showLoadingIndicator() {
-        loadingView.isHidden = false
+        loadingView.showLoading()
     }
 
     private func hideLoadingIndicator() {
-        loadingView.isHidden = true
+        loadingView.hideLoading()
     }
 }
 

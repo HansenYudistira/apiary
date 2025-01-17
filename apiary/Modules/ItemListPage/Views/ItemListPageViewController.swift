@@ -15,6 +15,7 @@ internal class ItemListPageViewController: UIViewController {
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = LocalizedKey.search.localized
+        searchController.searchBar.showsCancelButton = true
         return searchController
     }()
     lazy var refreshControl: UIRefreshControl = {
@@ -24,7 +25,8 @@ internal class ItemListPageViewController: UIViewController {
     }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .secondarySystemBackground
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(ItemListCellView.self, forCellReuseIdentifier: ItemListCellView.identifier)
         tableView.delegate = self
@@ -49,6 +51,7 @@ internal class ItemListPageViewController: UIViewController {
         alert.addAction(UIAlertAction(title: LocalizedKey.ok.localized, style: .default))
         return alert
     }()
+    lazy var gradientBackground: GradientBackgroundView = GradientBackgroundView()
 
     init(viewModel: ItemListPageViewModelProtocol) {
         self.viewModel = viewModel
@@ -67,17 +70,22 @@ internal class ItemListPageViewController: UIViewController {
     }
 
     private func setupView() {
+        navigationItem.title = viewModel.fetchTitle()
         navigationItem.searchController = searchBarController
-        view.backgroundColor = .systemRed
+        view.addSubview(gradientBackground)
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
+            gradientBackground.topAnchor.constraint(equalTo: view.topAnchor),
+            gradientBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            gradientBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            gradientBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
+
     private func fetchData() {
         viewItemListModel = viewModel.fetchData()
         updateDataSource()
@@ -90,7 +98,7 @@ internal class ItemListPageViewController: UIViewController {
         snapshot.appendItems(viewItemListModel)
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
     }
-    
+
     @objc func refreshData() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.viewItemListModel = self.viewModel.fetchData()

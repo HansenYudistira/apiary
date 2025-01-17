@@ -15,6 +15,11 @@ internal class ItemListPageViewModel: ItemListPageViewModelProtocol {
         return viewItemListModel
     }
 
+    internal func fetchTitle() -> String {
+        let title = itemCategoryModel.name.capitalized
+        return title
+    }
+
     internal func navigateToDetail(for item: ViewItemListModel) {
         let parameters = itemCategoryModel.items.first(where: { $0.id == item.id })
         guard

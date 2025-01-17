@@ -9,6 +9,7 @@ ItemListPageViewModelNavigateProtocol
 
 protocol ItemListPageViewModelFetchProtocol {
     func fetchData() -> [ViewItemListModel]
+    func fetchTitle() -> String
 }
 
 protocol ItemListPageViewModelNavigateProtocol {

@@ -3,6 +3,7 @@ import UIKit
 enum Destination {
     case homePage
     case itemListPage(ItemCategoryModel)
+    case detailPage(ItemListModel)
 }
 
 protocol Coordinator {
@@ -35,6 +36,10 @@ internal class AppCoordinator: Coordinator {
         case .itemListPage(let categoryModel):
             let itemListPageModule = ItemListPageModule()
             let vc = moduleAssembler.assemble(module: itemListPageModule, coordinator: self, parameters: categoryModel)
+            navigationController.pushViewController(vc, animated: true)
+        case .detailPage(let itemListModel):
+            let detailPageModule = DetailPageModule()
+            let vc = moduleAssembler.assemble(module: detailPageModule, coordinator: self, parameters: itemListModel)
             navigationController.pushViewController(vc, animated: true)
         }
     }

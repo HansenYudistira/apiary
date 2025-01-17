@@ -1,8 +1,10 @@
 import UIKit
+import Combine
 
 internal class ItemListPageViewController: UIViewController {
     private let viewModel: ItemListPageViewModelProtocol
     private var viewItemListModel: [ViewItemListModel] = []
+    private var cancellables: Set<AnyCancellable> = []
 
     enum Section {
         case main
@@ -36,6 +38,11 @@ internal class ItemListPageViewController: UIViewController {
         })
         return tableView
     }()
+    lazy var errorAlert: UIAlertController = {
+        let alert = UIAlertController(title: LocalizedKey.error.localized, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: LocalizedKey.ok.localized, style: .default))
+        return alert
+    }()
 
     init(viewModel: ItemListPageViewModelProtocol) {
         self.viewModel = viewModel
@@ -49,6 +56,7 @@ internal class ItemListPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        bindViewModel()
         fetchData()
     }
 
@@ -78,9 +86,33 @@ internal class ItemListPageViewController: UIViewController {
     }
 }
 
+extension ItemListPageViewController {
+    private func bindViewModel() {
+        guard
+            let viewModel = viewModel as? ItemListPageViewModel
+        else {
+            return
+        }
+        viewModel.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] errorMessage in
+                guard let self, let errorMessage else { return }
+                self.showErrorAlert(message: errorMessage)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func showErrorAlert(message: String) {
+        errorAlert.message = message
+        present(errorAlert, animated: true, completion: nil)
+    }
+}
+
 extension ItemListPageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("printed at index \(indexPath.row)")
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let viewModel = viewModel as? ItemListPageViewModel else { return }
+        viewModel.navigateToDetail(for: viewItemListModel[indexPath.row])
     }
 }
 

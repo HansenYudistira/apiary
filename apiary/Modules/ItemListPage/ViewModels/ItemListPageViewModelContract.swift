@@ -12,5 +12,5 @@ protocol ItemListPageViewModelFetchProtocol {
 }
 
 protocol ItemListPageViewModelNavigateProtocol {
-    func navigateToDetail(for item: ItemCategoryModel)
+    func navigateToDetail(for item: ViewItemListModel)
 }

@@ -50,3 +50,18 @@ internal struct ItemListPageModule: Module {
         return viewController
     }
 }
+
+internal struct DetailPageModule: Module {
+    internal func assemble(
+        coordinator: Coordinator,
+        parameters: ItemListModel
+    ) -> DetailPageViewController {
+        let contract = DetailPageViewModelContract(
+            parameters: parameters,
+            coordinator: coordinator
+        )
+        let vm = DetailPageViewModel(contract: contract)
+        let viewController = DetailPageViewController(viewModel: vm)
+        return viewController
+    }
+}

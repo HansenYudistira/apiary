@@ -48,9 +48,13 @@ To run the app locally, follow these steps:
    ```
 ### **Open the project in Xcode**:
 
-    Double-click the .xcodeproj or .xcworkspace file to open the project.
+    ```bash
+    open apiary.xcodeproj
+    ```
+or
+Double-click the apiary.xcodeproj file to open the project.
 ### **Run the app**:
 
-    Press Command + R or click the Run button in Xcode to build and run the app on the simulator or a connected device.
+Press Command + R or click the Run button in Xcode to build and run the app on the simulator or a connected device.
 
 ---
